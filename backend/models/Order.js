@@ -45,7 +45,7 @@ const orderSchema = new Schema(
       zipCode: { type: String },
       country: { type: String },
     },
-    isPayment: { type: Boolean, default: false },
+    paymentAt: { type: Date },
   },
   { timestamps: true }
 );
