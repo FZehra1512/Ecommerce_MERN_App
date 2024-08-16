@@ -1,10 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const descriptionSchema = new Schema({
-  dimension: { type: String }, // Can customize this schema based on the product e.g color, weight etc
-  material: { type: String },
-  detailedDescription: { type: String },
-});
 
 const productSchema = new Schema(
   {
