@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const { default: Product } = require("./models/Product");
 
 dotenv.config();
 
@@ -10,10 +11,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-// Basic route
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
 
 const PORT = process.env.PORT || 5000;
 
@@ -26,3 +23,15 @@ mongoose
   .catch((err) => console.log(err));
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+// Basic route
+app.get("/api/products", async(req, res) => {
+  try {
+    const products = await Product.find();
+    console.log(products);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+

@@ -1,5 +1,5 @@
-import mongoose, { Schema } from "mongoose";
-
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const descriptionSchema = new Schema({
   dimension: { type: String }, // Can customize this schema based on the product e.g color, weight etc
   material: { type: String },
@@ -9,7 +9,11 @@ const descriptionSchema = new Schema({
 const productSchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
-    description: descriptionSchema, // Description is an object
+    description: {
+      dimension: { type: String }, // Can customize this schema based on the product e.g color, weight etc
+      material: { type: String },
+      detailedDescription: { type: String },
+    }, // Description is an object
     productImg: { type: String }, // URL or file path for product image
     quantity: {
       type: Number,
@@ -38,7 +42,7 @@ const productSchema = new Schema(
   { timestamps: true }
 );
 
-const Product =
-  mongoose.models.Product ||
-  mongoose.model("Product", productSchema, "products");
-export default Product;
+const Product =mongoose.models.Product || mongoose.model("Product", productSchema, "products");
+
+
+module.exports = Product;
