@@ -7,8 +7,6 @@ import productRoutes from "./routes/productRoutes.js";
 dotenv.config();
 const app = express();
 
-// const getProduct=require("./routes/productRoutes.js")
-
 // Third party middlewares 
 app.use(cors());
 app.use(express.json());
@@ -16,11 +14,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
 connectDB();
-
-// Basic route
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
 
 // Product routes
 app.use("/api", productRoutes);
