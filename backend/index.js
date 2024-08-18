@@ -15,11 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 // Connect to MongoDB
 connectDB();
 
-// Basic route
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
-
 // Product routes
 app.use("/api", productRoutes);
 
