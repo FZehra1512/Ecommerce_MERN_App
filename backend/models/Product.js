@@ -30,7 +30,7 @@ const productSchema = new Schema(
     productCategory: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-      // required: true,
+      required: true,
     },
   },
   { timestamps: true }

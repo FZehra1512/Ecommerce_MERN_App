@@ -6,103 +6,103 @@ import { FaStar } from "react-icons/fa";
 
 const ProductList = () => {
 
-    const products = [
-      {
-        _id: "1",
-        name: "Apple Watch Series 7",
-        productImg:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4zei5FVv8t9JEHBUFzkH29Iysu4Zp0QKN9g&s",
-        description: {
-          dimension: "40mm x 34mm x 10.7mm",
-          material: "Stainless Steel",
-          detailedDescription:
-            "Stay connected, stay active, and stay healthy with the Apple Watch Series 7.",
-        },
-        quantity: 10,
-        avgRating: 4.5,
-        price: 399.99,
-        salePercentage: 10,
-        productCategory: "Electronics",
-      },
-      {
-        _id: "2",
-        name: "Nike Air Max 270",
-        productImg:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU3gIIflNifsedZHYNm9aqzI2BXzf1h1ZJ5g&s",
-        description: {
-          dimension: "US 8-13",
-          material: "Synthetic",
-          detailedDescription:
-            "Experience the comfort and style of the Nike Air Max 270, featuring a full-length air unit for maximum impact protection.",
-        },
-        quantity: 20,
-        avgRating: 0,
-        price: 129.99,
-        salePercentage: 0,
-        productCategory: "Shoes",
-      },
-      {
-        _id: "3",
-        name: "Sony Wireless Headphones",
-        productImg:
-          "https://www.jori.com/sites/default/files/styles/j2_h400/public/centerflow/jori-eden-36_reference_0.jpg?itok=QEj77hj2",
-        description: {
-          dimension: "7.3 x 2.9 x 10.4 inches",
-          material: "Plastic",
-          detailedDescription:
-            "Enjoy industry-leading noise cancellation and exceptional sound quality with the Sony WH-1000XM4 Wireless Headphones.",
-        },
-        quantity: 15,
-        avgRating: 4.9,
-        price: 349.99,
-        salePercentage: 15,
-        productCategory: "Electronics",
-      },
-      {
-        _id: "4",
-        name: "Sony Wireless Headphones",
-        productImg:
-          "https://www.jori.com/sites/default/files/styles/j2_h400/public/centerflow/jori-eden-36_reference_0.jpg?itok=QEj77hj2",
-        description: {
-          dimension: "7.3 x 2.9 x 10.4 inches",
-          material: "Plastic",
-          detailedDescription:
-            "Enjoy industry-leading noise cancellation and exceptional sound quality with the Sony WH-1000XM4 Wireless Headphones.",
-        },
-        quantity: 15,
-        avgRating: 4.9,
-        price: 349.99,
-        salePercentage: 50,
-        productCategory: "Electronics",
-      },
-    ];
-//   const [products, setProducts] = useState([]);
-//   const [error, setError] = useState(null);
-//   const [loading, setLoading] = useState(false);
+    // const products = [
+    //   {
+    //     _id: "1",
+    //     name: "Apple Watch Series 7",
+    //     productImg:
+    //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4zei5FVv8t9JEHBUFzkH29Iysu4Zp0QKN9g&s",
+    //     description: {
+    //       dimension: "40mm x 34mm x 10.7mm",
+    //       material: "Stainless Steel",
+    //       detailedDescription:
+    //         "Stay connected, stay active, and stay healthy with the Apple Watch Series 7.",
+    //     },
+    //     quantity: 10,
+    //     avgRating: 4.5,
+    //     price: 399.99,
+    //     salePercentage: 10,
+    //     productCategory: "Electronics",
+    //   },
+    //   {
+    //     _id: "2",
+    //     name: "Nike Air Max 270",
+    //     productImg:
+    //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU3gIIflNifsedZHYNm9aqzI2BXzf1h1ZJ5g&s",
+    //     description: {
+    //       dimension: "US 8-13",
+    //       material: "Synthetic",
+    //       detailedDescription:
+    //         "Experience the comfort and style of the Nike Air Max 270, featuring a full-length air unit for maximum impact protection.",
+    //     },
+    //     quantity: 20,
+    //     avgRating: 0,
+    //     price: 129.99,
+    //     salePercentage: 0,
+    //     productCategory: "Shoes",
+    //   },
+    //   {
+    //     _id: "3",
+    //     name: "Sony Wireless Headphones",
+    //     productImg:
+    //       "https://www.jori.com/sites/default/files/styles/j2_h400/public/centerflow/jori-eden-36_reference_0.jpg?itok=QEj77hj2",
+    //     description: {
+    //       dimension: "7.3 x 2.9 x 10.4 inches",
+    //       material: "Plastic",
+    //       detailedDescription:
+    //         "Enjoy industry-leading noise cancellation and exceptional sound quality with the Sony WH-1000XM4 Wireless Headphones.",
+    //     },
+    //     quantity: 15,
+    //     avgRating: 4.9,
+    //     price: 349.99,
+    //     salePercentage: 15,
+    //     productCategory: "Electronics",
+    //   },
+    //   {
+    //     _id: "4",
+    //     name: "Sony Wireless Headphones",
+    //     productImg:
+    //       "https://www.jori.com/sites/default/files/styles/j2_h400/public/centerflow/jori-eden-36_reference_0.jpg?itok=QEj77hj2",
+    //     description: {
+    //       dimension: "7.3 x 2.9 x 10.4 inches",
+    //       material: "Plastic",
+    //       detailedDescription:
+    //         "Enjoy industry-leading noise cancellation and exceptional sound quality with the Sony WH-1000XM4 Wireless Headphones.",
+    //     },
+    //     quantity: 15,
+    //     avgRating: 4.9,
+    //     price: 349.99,
+    //     salePercentage: 50,
+    //     productCategory: "Electronics",
+    //   },
+    // ];
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-//   useEffect(() => {
-//     const fetchProducts = async () => {
-//       try {
-//         setLoading(true);
-//         const response = await axios.get("http://localhost:5000/api/products");
-//         setProducts(response.data);
-//       } catch (error) {
-//         setError(error.message);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get("http://localhost:5000/api/products");
+        setProducts(response.data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-//     fetchProducts();
-//   }, []);
+    fetchProducts();
+  }, []);
 
-//   if (loading) {
-//     return <div>Loading...</div>;
-//   }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-//   if (error) {
-//     return <div>Error: {error}</div>;
-//   }
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="p-6">
@@ -137,11 +137,14 @@ const ProductCard = ({ product }) => {
           className="w-full rounded-r-xl-xl h-40 bg-slate-300 object-cover"
         />
         <div className="absolute top-3 w-full px-3 flex justify-between">
-          {salePercentage && (
+          {salePercentage > 0 ? (
             <p className="bg-red-500 text-white text-[16px] font-bold px-2 rounded-lg">
               -{salePercentage}%
             </p>
-          )}
+          ) : (
+            <div></div>
+          )
+        }
           <div className="flex space-x-2">
             <FavouriteButton productId={_id} size="32px" />
             <AddToCartButton productId={_id} size="32px" />
@@ -150,7 +153,7 @@ const ProductCard = ({ product }) => {
       </div>
 
       <div className="p-3">
-        <p className="text-sm font-semibold mb-2">{productCategory}</p>
+        <p className="text-sm font-semibold mb-2">{productCategory.name}</p>
         <h4 className="text-base font-semibold mb-0">{name}</h4>
         <p className="text-[14px] mb-2">
           Made with {description.material} and has a dimension of{" "}

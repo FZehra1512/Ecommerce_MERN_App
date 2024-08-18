@@ -4,6 +4,6 @@ import { getAllProducts, makeProduct } from "../controllers/productController.js
 const router = express.Router();
 
 router.get("/products", getAllProducts);
-router.post("/products", makeProduct);
+router.post("/createproducts", makeProduct);
 
 export default router;
