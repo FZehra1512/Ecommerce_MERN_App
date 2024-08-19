@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const userSchema = new Schema(
   {
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true},
     password: { type: String, required: true },
     name: { type: String, required: true },
     contact: { type: String }, // Can add a regex expression for validation e.g. match: /^[0-9]{10}$/
@@ -18,6 +18,10 @@ const userSchema = new Schema(
       },
     ], // Array of strings for multiple addresses
     gender: { type: String, enum: ["Male", "Female"] }, // Enum for predefined gender options
+    favourites: [
+      {type: mongoose.Schema.ObjectId, ref: "Product"}
+    ],
+    
   },
   { timestamps: true }
 );
