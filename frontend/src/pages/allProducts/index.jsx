@@ -5,77 +5,6 @@ import AddToCartButton from "../../components/cartButton";
 import { FaStar } from "react-icons/fa";
 
 const ProductList = () => {
-
-    // const products = [
-    //   {
-    //     _id: "1",
-    //     name: "Apple Watch Series 7",
-    //     productImg:
-    //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4zei5FVv8t9JEHBUFzkH29Iysu4Zp0QKN9g&s",
-    //     description: {
-    //       dimension: "40mm x 34mm x 10.7mm",
-    //       material: "Stainless Steel",
-    //       detailedDescription:
-    //         "Stay connected, stay active, and stay healthy with the Apple Watch Series 7.",
-    //     },
-    //     quantity: 10,
-    //     avgRating: 4.5,
-    //     price: 399.99,
-    //     salePercentage: 10,
-    //     productCategory: "Electronics",
-    //   },
-    //   {
-    //     _id: "2",
-    //     name: "Nike Air Max 270",
-    //     productImg:
-    //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU3gIIflNifsedZHYNm9aqzI2BXzf1h1ZJ5g&s",
-    //     description: {
-    //       dimension: "US 8-13",
-    //       material: "Synthetic",
-    //       detailedDescription:
-    //         "Experience the comfort and style of the Nike Air Max 270, featuring a full-length air unit for maximum impact protection.",
-    //     },
-    //     quantity: 20,
-    //     avgRating: 0,
-    //     price: 129.99,
-    //     salePercentage: 0,
-    //     productCategory: "Shoes",
-    //   },
-    //   {
-    //     _id: "3",
-    //     name: "Sony Wireless Headphones",
-    //     productImg:
-    //       "https://www.jori.com/sites/default/files/styles/j2_h400/public/centerflow/jori-eden-36_reference_0.jpg?itok=QEj77hj2",
-    //     description: {
-    //       dimension: "7.3 x 2.9 x 10.4 inches",
-    //       material: "Plastic",
-    //       detailedDescription:
-    //         "Enjoy industry-leading noise cancellation and exceptional sound quality with the Sony WH-1000XM4 Wireless Headphones.",
-    //     },
-    //     quantity: 15,
-    //     avgRating: 4.9,
-    //     price: 349.99,
-    //     salePercentage: 15,
-    //     productCategory: "Electronics",
-    //   },
-    //   {
-    //     _id: "4",
-    //     name: "Sony Wireless Headphones",
-    //     productImg:
-    //       "https://www.jori.com/sites/default/files/styles/j2_h400/public/centerflow/jori-eden-36_reference_0.jpg?itok=QEj77hj2",
-    //     description: {
-    //       dimension: "7.3 x 2.9 x 10.4 inches",
-    //       material: "Plastic",
-    //       detailedDescription:
-    //         "Enjoy industry-leading noise cancellation and exceptional sound quality with the Sony WH-1000XM4 Wireless Headphones.",
-    //     },
-    //     quantity: 15,
-    //     avgRating: 4.9,
-    //     price: 349.99,
-    //     salePercentage: 50,
-    //     productCategory: "Electronics",
-    //   },
-    // ];
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -97,7 +26,21 @@ const ProductList = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="p-6">
+        <h1 className="text-3xl font-bold mb-6">Product List</h1>
+        <div className="w-full grid-cols-1 grid grid-rows-[repeat(auto-fit,1fr)] gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {[1, 2, 3, 4, 5, 6].map((item) => (
+            <div
+              key={item}
+              className="bg-gray-200 rounded-xl shadow-lg overflow-hidden"
+            >
+              <SkeletonCard />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (error) {
@@ -116,7 +59,7 @@ const ProductList = () => {
   );
 };
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, loading=false }) => {
   const {
     _id,
     name,
@@ -129,7 +72,11 @@ const ProductCard = ({ product }) => {
   } = product;
 
   return (
-    <div className="bg-timberWolf rounded-xl shadow-lg overflow-hidden">
+    <div
+      className={`rounded-xl shadow-lg overflow-hidden ${
+        loading ? "bg-gray-400 animate-pulse" : "bg-timberWolf"
+      }`}
+    >
       <div className="relative">
         <img
           src={productImg}
@@ -143,8 +90,7 @@ const ProductCard = ({ product }) => {
             </p>
           ) : (
             <div></div>
-          )
-        }
+          )}
           <div className="flex space-x-2">
             <FavouriteButton productId={_id} size="32px" />
             <AddToCartButton productId={_id} size="32px" />
@@ -175,14 +121,14 @@ const ProductCard = ({ product }) => {
           )}
           {avgRating > 0 ? (
             <div className="flex items-center justify-center gap-2 font-semibold">
-            <span className="text-sm">{avgRating}</span>
-            <span className="text-yellow-600 text-base">
-              <FaStar />
-            </span>
-          </div>
+              <span className="text-sm">{avgRating}</span>
+              <span className="text-yellow-600 text-base">
+                <FaStar />
+              </span>
+            </div>
           ) : (
             <></>
-          )}  
+          )}
         </div>
       </div>
     </div>
@@ -190,3 +136,35 @@ const ProductCard = ({ product }) => {
 };
 
 export default ProductList;
+
+const SkeletonCard = () => {
+  return (
+    <div className="bg-white">
+      <div className="w-full h-40 bg-gray-300 rounded-r-xl-xl animate-pulse" />
+      <div className="p-3">
+        <SkeletonText width="24" height="4" />
+        <SkeletonText width="32" height="6" />
+        <SkeletonText width="40" height="4" />
+
+        <div className="flex justify-between mb-2">
+          <div className="flex gap-3">
+            <SkeletonText width="16" height="4" />
+            <SkeletonText width="16" height="4" />
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <SkeletonText width="8" height="4" />
+            <SkeletonText width="8" height="4" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const SkeletonText = ({ width, height }) => {
+  return (
+    <p
+      className={`bg-gray-300 w-${width} h-${height} rounded-lg animate-pulse`}
+    />
+  );
+};
