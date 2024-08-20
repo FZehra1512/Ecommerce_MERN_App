@@ -32,7 +32,7 @@ export const signUp = async (req, res) => {
         // Set the token as a cookie
         res.cookie("token", token), {
             httpOnly: true,
-            // maxAge: 604800, // Cookie expires in 7 days (604800 seconds) if remember me is true, otherwise 1 hour (3600 seconds)
+            maxAge: 604800 * 1000, // Cookie expires in 7 days (604800 seconds) if remember me is true, otherwise 1 hour (3600 seconds)
             secure: process.env.NODE_ENV === 'development',
             sameSite: 'strict',
             path: '/',
@@ -64,7 +64,7 @@ export const login = async (req, res) => {
                 // Set the token as a cookie
                 res.cookie("token", token, {
                     httpOnly: true,
-                    // maxAge: isRememberMe ? 604800 : 3600, // Cookie expires in 7 days (604800 seconds) if remember me is true, otherwise 1 hour (3600 seconds)
+                    maxAge: isRememberMe ? 604800 * 1000 : 3600 * 1000, // Cookie expires in 7 days (604800 seconds) if remember me is true, otherwise 1 hour (3600 seconds)
                     secure: process.env.NODE_ENV === 'development',
                     sameSite: 'strict',
                     path: '/',
