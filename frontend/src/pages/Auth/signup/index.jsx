@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
 const Signup = () => {
@@ -59,7 +59,6 @@ const Signup = () => {
             if (response.status === 201) {
                 navigate("/");;
             }
-
         } catch (error) {
             setError(error.message);
         }
