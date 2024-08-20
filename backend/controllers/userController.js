@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export const signUp = async (req, res) => {
     try {
-        const { email, password, name, contact, address, gender,userType } = req.body;
+        const { email, password, name, contact, address, gender, userType, isRememberMe } = req.body;
         // Check if email already exists
         const existingUser = await User.findOne({ email }).exec();
         if (existingUser) {
@@ -30,10 +30,16 @@ export const signUp = async (req, res) => {
         const token = jwt.sign({ uId: newUser._id }, process.env.SECRET);
 
         // Set the token as a cookie
-        res.cookie("token", token);
+        res.cookie("token", token), {
+            httpOnly: true,
+            maxAge: 604800, // Cookie expires in 7 days (604800 seconds) if remember me is true, otherwise 1 hour (3600 seconds)
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            path: '/',
+        };
 
         // Respond with success
-        res.status(201).json({ message: "User Created Successfully"});
+        res.status(201).json({ message: "User Created Successfully" });
 
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -42,7 +48,7 @@ export const signUp = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, isRememberMe } = req.body;
 
         const user = await User.findOne({ email }).exec();
 
@@ -56,10 +62,16 @@ export const login = async (req, res) => {
                 const token = jwt.sign({ uId: user._id }, process.env.SECRET);
 
                 // Set the token as a cookie
-                res.cookie("token", token);
+                res.cookie("token", token, {
+                    httpOnly: true,
+                    maxAge: isRememberMe ? 604800 : 3600, // Cookie expires in 7 days (604800 seconds) if remember me is true, otherwise 1 hour (3600 seconds)
+                    secure: process.env.NODE_ENV === 'production',
+                    sameSite: 'strict',
+                    path: '/',
+                });
 
                 // Respond with success
-                res.status(200).json({ message: "User LoggedIn Successfully", user: user});
+                res.status(200).json({ message: "User LoggedIn Successfully", user: user, token:token });
             }
             else if (result == false) {
                 return res.status(404).json({ message: "User not Found" });
@@ -71,6 +83,13 @@ export const login = async (req, res) => {
 }
 
 export const logout = async (req, res) => {
-    res.clearCookie("token", { httpOnly: true, secure: true }); 
+    res.cookie('token', '', {
+        httpOnly: true,
+        expires: new Date(0), // Set expiry date to remove cookie
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        path: '/',
+    });
+
     res.status(200).json({ message: "Logout successful" });
 };
