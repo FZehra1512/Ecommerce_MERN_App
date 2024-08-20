@@ -3,6 +3,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      screens: {
+        bwML: "960px",
+      },
       colors: {
         cherryBlossomPink: "#edafb8",
         champagnePink: "#f7e1d7",
