@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -22,6 +23,8 @@ connectDB();
 app.use("/api", productRoutes);
 //user Routes
 app.use("/api",userRoutes);
+//admin routes
+app.use("/admin",adminRoutes);
 
 
 const port = process.env.PORT || 5000;
