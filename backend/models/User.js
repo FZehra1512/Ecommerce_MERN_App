@@ -7,7 +7,7 @@ const userSchema = new Schema(
     name: { type: String, required: true },
     contact: { type: String }, // Can add a regex expression for validation e.g. match: /^[0-9]{10}$/
     profileImg: { type: String }, // Profile image is stored as a URL or file path
-    userType: { type: String },
+    userType: { type: String, default:"user" },
     address: [
       {
         street: { type: String },

@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export const signUp = async (req, res) => {
     try {
-        const { email, password, name, contact, profileImg, userType, address, gender } = req.body;
+        const { email, password, name, contact, address, gender,userType } = req.body;
         // Check if email already exists
         const existingUser = await User.findOne({ email }).exec();
         if (existingUser) {
@@ -20,7 +20,7 @@ export const signUp = async (req, res) => {
             password: hashedPassword,
             name,
             contact,
-            profileImg,
+            // profileImg,
             userType,
             address,
             gender
@@ -33,7 +33,7 @@ export const signUp = async (req, res) => {
         res.cookie("token", token);
 
         // Respond with success
-        res.status(201).json({ message: "User Created Successfully" });
+        res.status(201).json({ message: "User Created Successfully"});
 
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -59,7 +59,7 @@ export const login = async (req, res) => {
                 res.cookie("token", token);
 
                 // Respond with success
-                res.status(200).json({ message: "User LoggedIn Successfully", user: user ,token:token});
+                res.status(200).json({ message: "User LoggedIn Successfully", user: user});
             }
             else if (result == false) {
                 return res.status(404).json({ message: "User not Found" });
