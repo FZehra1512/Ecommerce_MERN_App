@@ -28,8 +28,7 @@ const ProductList = () => {
   if (loading) {
     return (
       <div className="p-6">
-        <h1 className="text-3xl font-bold mb-6">Product List</h1>
-        <div className="w-full grid-cols-1 grid grid-rows-[repeat(auto-fit,1fr)] gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="w-full grid-cols-1 grid grid-rows-[repeat(auto-fit,1fr)] gap-7 sm:gap-5 sm:grid-cols-2 bwML:grid-cols-3 xl:grid-cols-4">
           {[1, 2, 3, 4, 5, 6].map((item) => (
             <div
               key={item}
@@ -49,8 +48,7 @@ const ProductList = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Product List</h1>
-      <div className="w-full grid-cols-1 grid grid-rows-[repeat(auto-fit,1fr)] gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="w-full grid-cols-1 grid grid-rows-[repeat(auto-fit,1fr)] gap-7 sm:gap-5 sm:grid-cols-2 bwML:grid-cols-3 xl:grid-cols-4">
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
@@ -106,7 +104,7 @@ const ProductCard = ({ product, loading=false }) => {
           {description.dimension}
         </p>
 
-        <div className="flex justify-between mb-2">
+        <div className="flex justify-between">
           {salePercentage > 0 ? (
             <div className="flex gap-3">
               <span className="text-[14px] text-gray-500 font-semibold line-through">
@@ -138,33 +136,26 @@ const ProductCard = ({ product, loading=false }) => {
 export default ProductList;
 
 const SkeletonCard = () => {
+  const pulseBg = "bg-gray-300 rounded-lg animate-pulse";
   return (
     <div className="bg-white">
       <div className="w-full h-40 bg-gray-300 rounded-r-xl-xl animate-pulse" />
       <div className="p-3">
-        <SkeletonText width="24" height="4" />
-        <SkeletonText width="32" height="6" />
-        <SkeletonText width="40" height="4" />
+        <p className={`w-24 h-4 ${pulseBg}`} />
+        <p className={`w-32 h-6 ${pulseBg}`} />
+        <p className={`w-40 h-4 ${pulseBg}`} />
 
         <div className="flex justify-between mb-2">
           <div className="flex gap-3">
-            <SkeletonText width="16" height="4" />
-            <SkeletonText width="16" height="4" />
+            <p className={`w-12 h-4 ${pulseBg}`} />
+            <p className={`w-12 h-4 ${pulseBg}`} />
           </div>
           <div className="flex items-center justify-center gap-2">
-            <SkeletonText width="8" height="4" />
-            <SkeletonText width="8" height="4" />
+            <p className={`w-6 h-4 ${pulseBg}`} />
+            <p className={`w-6 h-4 ${pulseBg}`} />
           </div>
         </div>
       </div>
     </div>
-  );
-};
-
-const SkeletonText = ({ width, height }) => {
-  return (
-    <p
-      className={`bg-gray-300 w-${width} h-${height} rounded-lg animate-pulse`}
-    />
   );
 };

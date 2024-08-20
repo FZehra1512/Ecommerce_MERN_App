@@ -8,7 +8,7 @@ const productSchema = new Schema(
       material: { type: String },
       detailedDescription: { type: String },
     }, // Description is an object
-    productImg: { type: String }, // URL or file path for product image
+    productImg: [{ type: String }], // URL or file path for product image
     quantity: {
       type: Number,
       required: true,
