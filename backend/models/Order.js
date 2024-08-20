@@ -23,9 +23,8 @@ const orderSchema = new Schema(
       required: true,
       enum: [
         "Placed",
-        "Pending",
+        "Processing",
         "Dispatched",
-        "Shipped",
         "Delivered",
         "Cancelled",
       ], // Can be customized
