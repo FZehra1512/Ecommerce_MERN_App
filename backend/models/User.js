@@ -2,12 +2,16 @@ import mongoose, { Schema } from "mongoose";
 
 const userSchema = new Schema(
   {
-    email: { type: String, required: true},
+    email: { type: String, required: true },
     password: { type: String, required: true },
     name: { type: String, required: true },
     contact: { type: String }, // Can add a regex expression for validation e.g. match: /^[0-9]{10}$/
     profileImg: { type: String }, // Profile image is stored as a URL or file path
-    userType: { type: String, default:"user" },
+    userType: {
+      type: String,
+      enum: ["admin", "superAdmin","user","adminInProcess"],
+      default: "user",
+    },
     address: [
       {
         street: { type: String },
@@ -19,9 +23,9 @@ const userSchema = new Schema(
     ], // Array of strings for multiple addresses
     gender: { type: String, enum: ["Male", "Female"] }, // Enum for predefined gender options
     favourites: [
-      {type: mongoose.Schema.ObjectId, ref: "Product"}
-    ],
-    
+      { type: mongoose.Schema.ObjectId, ref: "Product" }
+    ],
+
   },
   { timestamps: true }
 );
