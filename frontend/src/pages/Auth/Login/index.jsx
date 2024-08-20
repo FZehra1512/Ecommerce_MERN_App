@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { toast } from "react-toastify";
 import Toast from "../../../components/toast";
 
@@ -11,6 +13,8 @@ const Login = () => {
       reset,
       formState: { errors },
     } = useForm();
+
+    const navigate = useNavigate();
 
     const [disabled, setDisabled] = useState(false);
 
@@ -51,15 +55,15 @@ const Login = () => {
               authUser.userType === "admin" ||
               authUser.userType === "superAdmin"
             ) {
-              router.push("/adminDashboard");
+              navigate("/adminDashboard");
             } else if (
               authUser.userType === "user" ||
               authUser.userType === "adminInProcess"
             ) {
-              router.push("/shop");
+              navigate("/shop");
             } else {
               // Handle other cases or provide a default route
-              router.push("/login");
+              navigate("/login");
             }
           }, 2000);
         }
@@ -81,7 +85,7 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <Toast />
-      <div className="bg-white border border-outerSpace shadow-lg rounded-lg p-8 max-w-md w-full">
+      <div className="bg-white border border-outerSpace shadow-lg rounded-lg m-6 p-8 max-w-md w-full">
         <h1 className="text-4xl font-bold text-center text-outerSpace mb-6">
           Login
         </h1>

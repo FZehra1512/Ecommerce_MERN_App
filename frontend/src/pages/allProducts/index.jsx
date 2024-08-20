@@ -15,6 +15,7 @@ const ProductList = () => {
         setLoading(true);
         const response = await axios.get("http://localhost:5000/api/products");
         setProducts(response.data);
+        console.log(products);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -25,6 +26,7 @@ const ProductList = () => {
     fetchProducts();
   }, []);
 
+  console.log(products);
   if (loading) {
     return (
       <div className="p-6">
