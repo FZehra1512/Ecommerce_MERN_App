@@ -16,43 +16,43 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-export const makeProduct = async (req, res) => {
-  try {
-    const {
-      name,
-      description,
-      productImg,
-      quantity,
-      price,
-      salePercentage,
-      productCategory,
-    } = req.body;
+// export const makeProduct = async (req, res) => {
+//   try {
+//     const {
+//       name,
+//       description,
+//       productImg,
+//       quantity,
+//       price,
+//       salePercentage,
+//       productCategory,
+//     } = req.body;
 
-    const newProduct = new Product({
-      name,
-      description,
-      productImg,
-      quantity,
-      price,
-      salePercentage,
-      productCategory,
-    });
+//     const newProduct = new Product({
+//       name,
+//       description,
+//       productImg,
+//       quantity,
+//       price,
+//       salePercentage,
+//       productCategory,
+//     });
 
-    // Check if product already exists
-    let existingProduct = await Product.findOne({ name: newProduct.name }); // Await the findOne operation
-    if (existingProduct) {
-      return res.status(400).json({ message: "Product Already exists" });
-    }
+//     // Check if product already exists
+//     let existingProduct = await Product.findOne({ name: newProduct.name }); // Await the findOne operation
+//     if (existingProduct) {
+//       return res.status(400).json({ message: "Product Already exists" });
+//     }
 
-    // Save the product to the database
-    const savedProduct = await newProduct.save();
+//     // Save the product to the database
+//     const savedProduct = await newProduct.save();
 
-    // Send the saved product as a response
-    return res
-      .status(201)
-      .json({ message: "Product created successfully", product: savedProduct });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+//     // Send the saved product as a response
+//     return res
+//       .status(201)
+//       .json({ message: "Product created successfully", product: savedProduct });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 
