@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Toast from "../../../components/toast";
+import { customLocalStorage } from "../../../features/customLocalStorage";
 
 const Login = () => {
 
@@ -39,17 +39,26 @@ const Login = () => {
           password,
           isRememberMe,
         };
-        console.log("Login Data: ", loginData);
 
         const response = await axios.post(
           "http://localhost:5000/api/login",
           loginData
         );
-        console.error("Response data:", response.data);
+
         const authUser = response.data.user;
 
         if (response.status === 200) {
           toast.success("Login successful");
+
+          // Store userType and userName based on isRememberMe (7 days or 1 hour)
+          if (isRememberMe) {
+            customLocalStorage.setItem("userType", authUser.userType, 604800 * 1000);
+            customLocalStorage.setItem("userName", authUser.name, 604800 * 1000);
+          } else {
+            customLocalStorage.setItem("userType", authUser.userType, 3600 * 1000);
+            customLocalStorage.setItem("userName", authUser.name, 604800 * 1000);
+          }
+
           setTimeout(() => {
             if (
               authUser.userType === "admin" ||
@@ -84,7 +93,6 @@ const Login = () => {
     };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <Toast />
       <div className="bg-white border border-outerSpace shadow-lg rounded-lg m-6 p-8 max-w-md w-full">
         <h1 className="text-4xl font-bold text-center text-outerSpace mb-6">
           Login
