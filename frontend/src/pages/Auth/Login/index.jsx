@@ -56,7 +56,7 @@ const Login = () => {
             customLocalStorage.setItem("userName", authUser.name, 604800 * 1000);
           } else {
             customLocalStorage.setItem("userType", authUser.userType, 3600 * 1000);
-            customLocalStorage.setItem("userName", authUser.name, 604800 * 1000);
+            customLocalStorage.setItem("userName", authUser.name, 3600 * 1000);
           }
 
           setTimeout(() => {
