@@ -42,9 +42,7 @@ const ProductList = () => {
     );
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+
 
   return (
     <div className="p-6">

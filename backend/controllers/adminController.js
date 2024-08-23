@@ -1,6 +1,7 @@
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
-
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 export const addProduct = async (req, res) => {
 
     try {
@@ -56,5 +57,28 @@ export const updateProduct = async (req, res) => {
         return res.status(200).json({ message: "Product Updated Successfully", product: updatedProduct });
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+}
+
+export const checkAdmin=async(req,res)=>{
+    try {
+        let token = req.cookies.token; //token from client browser
+        // console.log(token);
+        if (token === "") return res.status(401).json({ message: "Unauthorized User" });
+        const decoded = jwt.verify(token, process.env.SECRET);
+
+        // Finding the user by ID from the decoded token
+        const decodedUser = await User.findById(decoded.uId).exec();
+
+        if (!decodedUser) return res.status(401).json({ message: "Unauthorized User" });
+
+        // Check if the user is authorized
+        if (decodedUser.userType === "user" || decodedUser.userType === "adminInProcess") {
+            return res.status(401).json({ message: "Unauthorizeasdad User" });
+        }
+
+        return res.status(200).json({ message: "Admin logged in successfully",userType:decodedUser.userType });
+    } catch (error) {
+        res.status(500).json({ message: `${error.message}` });
     }
 }
