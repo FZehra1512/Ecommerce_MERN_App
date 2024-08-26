@@ -10,6 +10,7 @@ import AdminDashBoard from "../pages/adminDashboard";
 import Navbar from "../components/navbar";
 import Toast from "../components/toast";
 
+
 const MainRoutes = () => {
   return (
     <BrowserRouter>
@@ -21,9 +22,9 @@ const MainRoutes = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/allProducts" element={<ProductList></ProductList>} />
-        {/* <Route element={<ProtectedRoute allowedUserTypes={['admin', 'superAdmin']} />}> */}
+        <Route element={<ProtectedRoute/>}>
           <Route path="/adminDashboard" element={<AdminDashBoard />} />
-        {/* </Route> */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Cookies from 'js-cookie';
 import { toast } from "react-toastify";
 import { customLocalStorage } from "../../../features/customLocalStorage";
 
@@ -47,7 +48,9 @@ const Login = () => {
 
         const authUser = response.data.user;
 
+        console.log(response);
         if (response.status === 200) {
+          Cookies.set('token',response.data.token,{ expires: isRememberMe ? 7 : 1 , secure: true, sameSite: 'strict', path: '/' });
           toast.success("Login successful");
 
           // Store userType and userName based on isRememberMe (7 days or 1 hour)

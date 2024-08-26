@@ -34,25 +34,89 @@
 
 
 
-import React from "react";
+// import React from "react";
+// import { Navigate, Outlet } from "react-router-dom";
+// import { customLocalStorage } from "../../features/customLocalStorage";
+
+// const ProtectedRoute = ({ allowedUserTypes }) => {
+//   const userType = customLocalStorage.getItem("userType")
+
+//   if (!userType) {
+//     // Redirect to login if there's no userType
+//     return <Navigate to="/login" />;
+//   }
+
+//   if (!allowedUserTypes.includes(userType)) {
+//     // Redirect to shop if userType is not allowed
+//     return <Navigate to="/shop" />;
+//   }
+
+//   // If userType is allowed, render the child components (nested routes)
+//   return <Outlet />;
+// };
+
+// export default ProtectedRoute;
+
+
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { customLocalStorage } from "../../features/customLocalStorage";
 
-const ProtectedRoute = ({ allowedUserTypes }) => {
-  const userType = customLocalStorage.getItem("userType")
+const ProtectedRoute = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(""); // null initially to indicate loading
+  const [userType, setUserType] = useState(null);
 
-  if (!userType) {
-    // Redirect to login if there's no userType
-    return <Navigate to="/login" />;
+  useEffect(() => {
+    const checkAdmin = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/admin/checkAdmin", {
+          withCredentials: true
+        });
+
+        if (response.status === 200) {
+          const userType = response.data.userType;
+          if (userType === "admin" || userType === "superAdmin") {
+            setIsAuthenticated("200");
+            setUserType(userType);
+            console.log(response.data.message)
+
+          }
+        }
+      } catch (error) {
+        if (error.response && error.response.data.status === 401) {
+          setIsAuthenticated("401");
+          console.log(error.response.data.message)
+        } else if (error.response && error.response.status === 404) {
+          setIsAuthenticated("404");
+          console.log(error.response.data.message)
+
+        } else {
+          console.error("Error during admin check:", error);
+          setIsAuthenticated("500");
+          console.log(error.response.data.message)
+
+        }
+      }
+    };
+
+    checkAdmin();
+  }, []);
+
+  if (isAuthenticated === "") {
+    // You can return a loading spinner here if needed
+    return <div>Loading...</div>;
   }
 
-  if (!allowedUserTypes.includes(userType)) {
-    // Redirect to shop if userType is not allowed
-    return <Navigate to="/shop" />;
+  if (isAuthenticated === "200") {
+    return <Outlet />;
+  } else if (isAuthenticated === "404") {
+    return <Navigate to="/login" replace />;
+  } else if (isAuthenticated === "401") {
+    return <Navigate to="/shop" replace />;
+  } else {
+    return <Navigate to="/shop" replace />;
   }
-
-  // If userType is allowed, render the child components (nested routes)
-  return <Outlet />;
 };
 
 export default ProtectedRoute;
+
