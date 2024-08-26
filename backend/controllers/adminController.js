@@ -62,19 +62,20 @@ export const updateProduct = async (req, res) => {
 
 export const checkAdmin=async(req,res)=>{
     try {
+        // console.log(req.cookies);
         let token = req.cookies.token; //token from client browser
-        // console.log(token);
-        if (token === "") return res.status(401).json({ message: "Unauthorized User" });
+        console.log(token);
+        if (!token) return res.status(404).json({ message: "token ni mila User" });
         const decoded = jwt.verify(token, process.env.SECRET);
 
         // Finding the user by ID from the decoded token
         const decodedUser = await User.findById(decoded.uId).exec();
 
-        if (!decodedUser) return res.status(401).json({ message: "Unauthorized User" });
+        if (!decodedUser) return res.status(404).json({ message: " user ni mila Unauthorized User" });
 
         // Check if the user is authorized
         if (decodedUser.userType === "user" || decodedUser.userType === "adminInProcess") {
-            return res.status(401).json({ message: "Unauthorizeasdad User" });
+            return res.status(401).json({ message: "user not admin Unauthorizeasdad User" });
         }
 
         return res.status(200).json({ message: "Admin logged in successfully",userType:decodedUser.userType });
