@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export const signUp = async (req, res) => {
     try {
-        const { email, password, name, contact, address, gender, userType, isRememberMe } = req.body;
+        const { email, password, name, contact, address, gender, userType } = req.body;
         // Check if email already exists
         const existingUser = await User.findOne({ email }).exec();
         if (existingUser) {
@@ -30,13 +30,13 @@ export const signUp = async (req, res) => {
         const token = jwt.sign({ uId: newUser._id }, process.env.SECRET);
 
         // Set the token as a cookie
-        res.cookie("token", token), {
-            httpOnly: true,
-            maxAge: 604800 * 1000, // Cookie expires in 7 days (604800 seconds) if remember me is true, otherwise 1 hour (3600 seconds)
-            secure: process.env.NODE_ENV === 'development',
-            sameSite: 'strict',
-            path: '/',
-        };
+        // res.cookie("token", token), {
+        //     httpOnly: true,
+        //     maxAge: 604800 * 1000, // Cookie expires in 7 days (604800 seconds) if remember me is true, otherwise 1 hour (3600 seconds)
+        //     secure: process.env.NODE_ENV === 'development',
+        //     sameSite: 'strict',
+        //     path: '/',
+        // };
 
         // Respond with success
         res.status(201).json({ message: "User Created Successfully" });
@@ -62,14 +62,14 @@ export const login = async (req, res) => {
                 const token = jwt.sign({ uId: user._id }, process.env.SECRET);
                 // console.log(token);
                 // Set the token as a cookie
-                res.cookie("token", token, {
-                    httpOnly: true,
-                    maxAge: isRememberMe ? 604800 * 1000 : 3600 * 1000, // Cookie expires in 7 days (604800 seconds) if remember me is true, otherwise 1 hour (3600 seconds)
-                    // secure: process.env.NODE_ENV === 'production',
-                    secure: false,
-                    sameSite: 'strict',
-                    path: '/',
-                });
+                // res.cookie("token", token, {
+                //     httpOnly: true,
+                //     maxAge: isRememberMe ? 604800 * 1000 : 3600 * 1000, // Cookie expires in 7 days (604800 seconds) if remember me is true, otherwise 1 hour (3600 seconds)
+                //     // secure: process.env.NODE_ENV === 'production',
+                //     secure: false,
+                //     sameSite: 'strict',
+                //     path: '/',
+                // });
 
                 // Respond with success
                 const { name, userType, email, contact, address, gender } = user;

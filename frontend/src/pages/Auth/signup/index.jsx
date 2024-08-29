@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -58,6 +59,8 @@ const Signup = () => {
             const response = await axios.post("http://localhost:5000/api/register", formData);
             if (response.status === 201) {
                 navigate("/");;
+                // Cookies.set('token', response.data.token, { expires: 7, secure: true, sameSite: 'strict', path: '/' });
+                toast.success("Signup successful");
             }
         } catch (error) {
             setError(error.message);
