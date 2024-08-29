@@ -64,7 +64,7 @@ export const checkAdmin=async(req,res)=>{
     try {
         // console.log(req.cookies);
         let token = req.cookies.token; //token from client browser
-        console.log(token);
+
         if (!token) return res.status(404).json({ message: "token ni mila User" });
         const decoded = jwt.verify(token, process.env.SECRET);
 
