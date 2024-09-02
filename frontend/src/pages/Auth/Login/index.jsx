@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
 import { toast } from "react-toastify";
@@ -95,7 +95,7 @@ const Login = () => {
       }
     };
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 pt-16">
       <div className="bg-white border border-outerSpace shadow-lg rounded-lg m-6 p-8 max-w-md w-full">
         <h1 className="text-4xl font-bold text-center text-outerSpace mb-6">
           Login
@@ -140,8 +140,8 @@ const Login = () => {
               name="password"
               {...register("password", {
                 required: {
-                    value: true,
-                    message: "Please enter your password",
+                  value: true,
+                  message: "Please enter your password",
                 },
                 // minLength: {
                 //     value: 8,
@@ -187,6 +187,9 @@ const Login = () => {
             Login
           </button>
         </form>
+        <p className="mt-6 text-sm text-center">
+          Don't have an account <Link to="/signup" className="font-bold text-outerSpace cursor-pointer">Sign Up</Link> here
+        </p>
       </div>
     </div>
   );
@@ -194,19 +197,3 @@ const Login = () => {
 
 export default Login
 
-
-
-// {...register("password", {
-//         required: {
-//           value: true,
-//           message: "Please enter your password",
-//         },
-//         minLength: {
-//           value: 8,
-//           message: "Password must be at least 8 characters",
-//         },
-//         pattern: {
-//           value: /^(?=.*[a-zA-Z])(?=.*[0-9]).*$/,
-//           message: "Password must contain at least one letter and one number",
-//         },
-//       })}
