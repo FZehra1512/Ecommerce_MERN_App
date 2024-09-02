@@ -59,6 +59,14 @@ export const login = async (req, res) => {
                 //     sameSite: 'strict',
                 //     path: '/',
                 // });
+                // res.cookie("token", token, {
+                //     httpOnly: true,
+                //     maxAge: isRememberMe ? 604800 * 1000 : 3600 * 1000, // Cookie expires in 7 days (604800 seconds) if remember me is true, otherwise 1 hour (3600 seconds)
+                //     // secure: process.env.NODE_ENV === 'production',
+                //     secure: false,
+                //     sameSite: 'strict',
+                //     path: '/',
+                // });
 
                 // Respond with success
                 const { name, userType, email, contact, address, gender } = user;

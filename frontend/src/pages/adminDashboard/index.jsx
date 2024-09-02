@@ -3,51 +3,18 @@ import { customLocalStorage } from '../../features/customLocalStorage';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import logo from "../../assets/logo.png"
+import { IoAdd } from "react-icons/io5";
+import { FaCartShopping } from "react-icons/fa6";
+
+
+
 
 const AdminDashBoard = () => {
   console.log(`In dashboard ${customLocalStorage.getItem("userType")}`);
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const checkAdmin = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const response = await axios.get("http://localhost:5000/admin/checkAdmin");
-  //       console.log(response.data.userType);
-  //       // console.log(response.status)
-  //       if (response.status === 200) {
-  //         const userType = response.data.userType;
-  //         if (userType === "admin" || userType === "superAdmin") {
-  //           navigate("/adminDashboard");
-
-  //         }
-  //       }
-  //       // else if (response.status === 401) {
-  //       //   navigate("/shop");
-  //       // }
-  //     }
-  //     catch (error) {
-  //       if (error.response.status === 401) {
-  //         navigate("/shop");
-  //       }
-  //       else if (error.response.status === 404) {
-  //         navigate("/login");
-  //       }
-  //       else {
-  //         setError(error.message);
-  //         console.error("Error during admin check:", error);
-
-  //       }
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   checkAdmin();
-  // }, [navigate]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -58,13 +25,25 @@ const AdminDashBoard = () => {
   }
 
   return (
-    <div className='text-5xl mt-28'>
-      Admin Dashboard
-      <aside className='p-5 border border-slate-900 w-1/3 h-full overflow-hidden'>
-        <div className="logo">InteriorX</div>
-        <div className=""></div>
-        {/* <Link className='text-3xl'>Add Product</Link> */}
-      </aside>
+    <div className=" relative top-16 main-div border border-zinc-950 w-3/12 h-screen">
+      <div className=" flex flex-col justify-center items-center logo overflow-hidden">
+        <img src={logo} alt="logo" />
+        {/* <h2 className=' w-full text-center'>InteriorX</h2> */}
+      </div>
+      <div className="text-slate-950 flex flex-col justify-center items-stretch gap-2 list">
+        <Link to="/addProduct" className="hover:bg-pink-200 flex justify-evenly items-center">
+          <Link to="/addProduct" className='text-1xl'>Add Product</Link>
+          <IoAdd />
+        </Link>
+
+        <div className="flex justify-evenly items-center">
+          <Link className='text-1xl'>View Orders</Link>
+          <FaCartShopping />
+        </div>
+
+
+
+      </div>
     </div>
   );
 }

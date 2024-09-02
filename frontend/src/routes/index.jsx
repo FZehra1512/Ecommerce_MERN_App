@@ -9,6 +9,7 @@ import Login from "../pages/Auth/Login";
 import AdminDashBoard from "../pages/adminDashboard";
 import Navbar from "../components/navbar";
 import Toast from "../components/toast";
+import AddProd from "../pages/adminDashboard/AddProd";
 
 
 const MainRoutes = () => {
@@ -24,6 +25,7 @@ const MainRoutes = () => {
         <Route path="/allProducts" element={<ProductList></ProductList>} />
         <Route element={<ProtectedRoute/>}>
           <Route path="/adminDashboard" element={<AdminDashBoard />} />
+          <Route path="/addProduct" element={<AddProd />} />
         </Route>
       </Routes>
     </BrowserRouter>
