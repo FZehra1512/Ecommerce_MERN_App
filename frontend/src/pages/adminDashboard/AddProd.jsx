@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import Cookies from 'js-cookie';    
 
 const addProd = () => {
     const [formData, setFormData] = useState({
@@ -46,10 +47,11 @@ const addProd = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const token=Cookies.get('token');
         console.log(formData);
         try {
             const response = await axios.post("http://localhost:5000/admin/addProduct",
-                formData);
+                {token,formData});
 
             if (response.status == 200) {
                 toast.success("Product Added Successfully");

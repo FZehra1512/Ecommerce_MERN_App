@@ -5,9 +5,9 @@ import User from "../models/User.js";
 export const addProduct = async (req, res) => {
 
     try {
-        const { name, description, productImg, quantity, price, salePercentage, productCategory } = req.body;
+        const { name, description, productImg, quantity, price, salePercentage } = req.body.formData;
         const newProd = await Product.create({
-            name, description, productImg, quantity, price, salePercentage, productCategory
+            name, description, productImg, quantity, price, salePercentage
         })
         await newProd.save();
         res.send({

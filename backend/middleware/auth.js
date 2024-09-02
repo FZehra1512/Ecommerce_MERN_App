@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 export const isAdminLoggedIn = async (req, res, next) => {
     try {
-        let token = req.cookies.token; //token from client browser
+        let token = req.body.token; //token from client browser
         console.log(`token hai:${token}`);
         if (!token) return res.status(404).json({ message: "Unauthorized User" });
         const decoded = jwt.verify(token, process.env.SECRET);
