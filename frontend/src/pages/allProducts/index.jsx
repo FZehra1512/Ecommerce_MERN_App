@@ -74,7 +74,7 @@ const ProductCard = ({ product, loading = false }) => {
     >
       <div className="relative">
         <img
-          src={productImg}
+          src={productImg[0]}
           alt={name}
           className="w-full rounded-r-xl-xl h-40 bg-slate-300 object-cover"
         />
@@ -97,8 +97,8 @@ const ProductCard = ({ product, loading = false }) => {
         <p className="text-sm font-semibold mb-2">{productCategory?.name}</p>
         <h4 className="text-base font-semibold mb-0">{name}</h4>
         <p className="text-[14px] mb-2">
-          Made with {description.material} and has a dimension of{" "}
-          {description.dimension}
+          Made with {description?.material} and has a dimension of{" "}
+          {description?.dimension}
         </p>
 
         <div className="flex justify-between">

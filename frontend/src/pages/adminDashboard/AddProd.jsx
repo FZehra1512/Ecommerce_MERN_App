@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import Cookies from 'js-cookie';    
+import Cookies from 'js-cookie';
 
-const addProd = () => {
+const AddProd = () => {
     const [formData, setFormData] = useState({
         name: "",
         description: {
@@ -11,7 +11,7 @@ const addProd = () => {
             material: "",
             detailedDescription: "",
         },
-        productImg: [""],
+        productImg: [],
         quantity: 0,
         avgRating: 0,
         price: 0,
@@ -20,7 +20,7 @@ const addProd = () => {
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, files } = e.target;
 
         if (name.startsWith("description.")) {
             const key = name.split(".")[1];
@@ -32,10 +32,9 @@ const addProd = () => {
                 },
             }));
         } else if (name === "productImg") {
-            const files = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
             setFormData((prevData) => ({
                 ...prevData,
-                productImg: files,
+                productImg: files, // Store files directly in productImg
             }));
         } else {
             setFormData((prevData) => ({
@@ -47,19 +46,40 @@ const addProd = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token=Cookies.get('token');
-        console.log(formData);
-        try {
-            const response = await axios.post("http://localhost:5000/admin/addProduct",
-                {token,formData});
+        const token = Cookies.get('token');
+        const formDataToSend = new FormData();
 
-            if (response.status == 200) {
+        // Append all fields to FormData
+        formDataToSend.append('token', token);
+        formDataToSend.append('formData', JSON.stringify({
+            name: formData.name,
+            description: formData.description,
+            quantity: formData.quantity,
+            avgRating: formData.avgRating,
+            price: formData.price,
+            salePercentage: formData.salePercentage,
+            productCategory: formData.productCategory,
+        }));
+
+        // Append each image file to FormData
+        for (let i = 0; i < formData.productImg.length; i++) {
+            formDataToSend.append('productImg', formData.productImg[i]);
+        }
+
+        try {
+            const response = await axios.post("http://localhost:5000/admin/addProduct", formDataToSend, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Ensure the correct content type is set,
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.status === 200) {
                 toast.success("Product Added Successfully");
             }
-
         } catch (error) {
             console.log(error.message);
-            toast.error("Some Error Occured, Try again");
+            toast.error("Some Error Occurred, Try again");
         }
     };
 
@@ -132,19 +152,6 @@ const addProd = () => {
                 />
             </div>
 
-            {/* <div>
-            <label className="block text-sm font-medium text-gray-700">Average Rating</label>
-            <input
-            type="number"
-            name="avgRating"
-            value={formData.avgRating}
-            onChange={handleChange}
-            min="0"
-            max="5"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-            />
-        </div> */}
-
             <div>
                 <label className="block text-sm font-medium text-gray-700">Price</label>
                 <input
@@ -192,4 +199,4 @@ const addProd = () => {
     );
 };
 
-export default addProd;
+export default AddProd;

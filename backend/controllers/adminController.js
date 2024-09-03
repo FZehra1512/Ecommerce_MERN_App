@@ -2,23 +2,45 @@ import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-export const addProduct = async (req, res) => {
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
+export const addProduct = async (req, res) => {
     try {
-        const { name, description, productImg, quantity, price, salePercentage } = req.body.formData;
+        const formData = JSON.parse(req.body.formData)
+        const { name, description, quantity, price, salePercentage } = formData;
+        const files = req.files;
+
+        // Check if files exist
+        if (!files || files.length === 0) {
+            return res.status(400).json({ message: "No images uploaded." });
+        }
+
+        // Upload each file to Cloudinary and collect the URLs
+        const imageUploadPromises = files.map((file) => uploadOnCloudinary(file.path));
+        const imagesUploaded = await Promise.all(imageUploadPromises);
+
+        // Save product with the uploaded image URLs
         const newProd = await Product.create({
-            name, description, productImg, quantity, price, salePercentage
-        })
-        await newProd.save();
-        res.send({
-            message: "Admin add product API",
-            user: req.user, // Sending user details in the response
+            name,
+            description,
+            productImg: imagesUploaded, // Save the array of URLs
+            quantity,
+            price,
+            salePercentage,
         });
 
+        await newProd.save();
+
+        res.status(200).json({
+            message: "Product added successfully",
+            user: req.user, // Sending user details in the response
+        });
     } catch (error) {
+        console.error("Error in addProduct:", error);
         res.status(500).json({ message: error.message });
     }
-}
+};
+
 
 export const deleteProduct = async (req, res) => {
     try {
@@ -60,7 +82,7 @@ export const updateProduct = async (req, res) => {
     }
 }
 
-export const checkAdmin=async(req,res)=>{
+export const checkAdmin = async (req, res) => {
     try {
         // console.log(req.cookies);
         let token = req.cookies.token; //token from client browser
@@ -78,7 +100,7 @@ export const checkAdmin=async(req,res)=>{
             return res.status(401).json({ message: "user not admin Unauthorizeasdad User" });
         }
 
-        return res.status(200).json({ message: "Admin logged in successfully",userType:decodedUser.userType });
+        return res.status(200).json({ message: "Admin logged in successfully", userType: decodedUser.userType });
     } catch (error) {
         res.status(500).json({ message: `${error.message}` });
     }
