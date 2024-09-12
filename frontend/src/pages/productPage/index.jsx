@@ -59,8 +59,8 @@ const index = () => {
     }
 
     return (
-        <div className="mt-5 container mx-auto p-6">
-            <div className="flex flex-col md:flex-row gap-8">
+        <div className="container mx-auto p-6">
+            <div style={{marginTop:"5rem"}}  className="flex flex-col md:flex-row gap-8">
                 {/* Product Images */}
                 <div className="md:w-1/2">
                     {/* Main Product Image */}
@@ -70,7 +70,7 @@ const index = () => {
                         className="w-full h-auto object-cover mb-4"
                     />
                     {product.salePercentage > 0 && (
-                        <span className="text-red-500 font-semibold text-lg absolute top-4 left-4 bg-red-200 px-2 py-1 rounded-lg">
+                        <span style={{marginTop:"5rem"}}  className="text-red-500 font-semibold text-lg absolute top-4 left-4 bg-red-200 px-2 py-1 rounded-lg">
                             Sale {product.salePercentage}%
                         </span>
                     )}

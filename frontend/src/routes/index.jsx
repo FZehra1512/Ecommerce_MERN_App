@@ -16,7 +16,7 @@ import ProductPage from "../pages/productPage"
 const MainRoutes = () => {
   return (
     <BrowserRouter>
-      {/* <Navbar /> */}
+      <Navbar />
       <Toast />
       <Routes>
         <Route path="/" element={<Home />} />
