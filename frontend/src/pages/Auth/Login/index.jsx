@@ -47,6 +47,7 @@ const Login = () => {
         );
 
         const authUser = response.data.user;
+        // console.log(authUser)
 
         console.log(response);
         if (response.status === 200) {

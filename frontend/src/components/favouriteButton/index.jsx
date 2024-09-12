@@ -12,7 +12,7 @@ const FavouriteButton = ({ productId, className, size = "24px" }) => {
     setTimeout(() => {
       setRipple(false);
     }, 300); // Control how long the ripple effect lasts
-    console.log(`Product ID: ${productId}`);
+    console.log(`Product ID: ${productId} ${isFavourite}`);
   };
 
   return (

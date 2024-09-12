@@ -11,6 +11,8 @@ import Navbar from "../components/navbar";
 import Toast from "../components/toast";
 import AddProd from "../pages/adminDashboard/AddProd";
 import ProductPage from "../pages/productPage"
+import Profile from "../pages/profile"
+import Cart from "../pages/cart"
 
 
 const MainRoutes = () => {
@@ -24,6 +26,8 @@ const MainRoutes = () => {
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/allProducts" element={<ProductList></ProductList>} />
         <Route element={<ProtectedRoute />}>
           <Route path="/adminDashboard" element={<AdminDashBoard />} />

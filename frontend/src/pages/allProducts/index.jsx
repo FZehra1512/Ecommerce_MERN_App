@@ -74,11 +74,11 @@ const ProductCard = ({ product, loading = false }) => {
     navigate(`/product/${_id}`);
   }
   return (
-    <div onClick={handleClick}
-      className={`cursor-pointer rounded-xl shadow-lg overflow-hidden ${loading ? "bg-gray-400 animate-pulse" : "bg-timberWolf"
+    <div 
+      className={`rounded-xl shadow-lg overflow-hidden ${loading ? "bg-gray-400 animate-pulse" : "bg-timberWolf"
         }`}
     >
-      <div className=" relative">
+      <div  className=" relative">
         <img
           src={productImg[0]}
           alt={name}
@@ -99,7 +99,7 @@ const ProductCard = ({ product, loading = false }) => {
         </div>
       </div>
 
-      <div className="p-3">
+      <div onClick={handleClick} className="cursor-pointer p-3">
         <p className="text-sm font-semibold mb-2">{productCategory?.name}</p>
         <h4 className="text-base font-semibold mb-0">{name}</h4>
         <p className="text-[14px] mb-2">
