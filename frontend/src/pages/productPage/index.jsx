@@ -55,12 +55,12 @@ const index = () => {
     };
 
     if (!product) {
-        return <div>Loading...</div>; // Loading state
+        return <SkeletonCard></SkeletonCard>
     }
 
     return (
         <div className="container mx-auto p-6">
-            <div style={{marginTop:"5rem"}}  className="flex flex-col md:flex-row gap-8">
+            <div style={{ marginTop: "5rem" }} className="flex flex-col md:flex-row gap-8">
                 {/* Product Images */}
                 <div className="md:w-1/2">
                     {/* Main Product Image */}
@@ -70,7 +70,7 @@ const index = () => {
                         className="w-full h-auto object-cover mb-4"
                     />
                     {product.salePercentage > 0 && (
-                        <span style={{marginTop:"5rem"}}  className="text-red-500 font-semibold text-lg absolute top-4 left-4 bg-red-200 px-2 py-1 rounded-lg">
+                        <span style={{ marginTop: "5rem" }} className="text-red-500 font-semibold text-lg absolute top-4 left-4 bg-red-200 px-2 py-1 rounded-lg">
                             Sale {product.salePercentage}%
                         </span>
                     )}
@@ -105,7 +105,7 @@ const index = () => {
                     )}
 
                     <div className="flex items-center gap-4">
-                        <span className="text-2xl line-through text-gray-400">Rs. {product.price}</span>
+                        {product.salePercentage>0 && <span className="text-2xl line-through text-gray-400">Rs. {product.price}</span>}
                         <span className="text-4xl text-red-600 font-bold">Rs. {(product.price - product.price * (product.salePercentage / 100)).toFixed(2)}</span>
                     </div>
 
@@ -126,6 +126,9 @@ const index = () => {
                             className="border rounded-lg w-16 text-center py-2"
                         />
                     </div>
+                    
+                    {/* Error Message */}
+                    {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
                     {/* Description Panel */}
                     <div className="bg-gray-100 p-4 mt-8 rounded-lg shadow-md">
@@ -141,8 +144,6 @@ const index = () => {
                         </p>
                     </div>
 
-                    {/* Error Message */}
-                    {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
                     <div className="flex gap-4 mt-4">
                         <button
@@ -162,3 +163,29 @@ const index = () => {
 };
 
 export default index;
+
+const SkeletonCard = () => {
+    const pulseBg = "bg-gray-300 rounded-lg animate-pulse";
+    return (
+      <div className="bg-white">
+        <div className="w-full h-40 bg-gray-300 rounded-r-xl-xl animate-pulse" />
+        <div className="p-3">
+          <p className={`w-24 h-4 ${pulseBg}`} />
+          <p className={`w-32 h-6 ${pulseBg}`} />
+          <p className={`w-40 h-4 ${pulseBg}`} />
+  
+          <div className="flex justify-between mb-2">
+            <div className="flex gap-3">
+              <p className={`w-12 h-4 ${pulseBg}`} />
+              <p className={`w-12 h-4 ${pulseBg}`} />
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <p className={`w-6 h-4 ${pulseBg}`} />
+              <p className={`w-6 h-4 ${pulseBg}`} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
