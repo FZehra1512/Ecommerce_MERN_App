@@ -10,16 +10,18 @@ import AdminDashBoard from "../pages/adminDashboard";
 import Navbar from "../components/navbar";
 import Toast from "../components/toast";
 import AddProd from "../pages/adminDashboard/AddProd";
+import ProductPage from "../pages/productPage"
 
 
 const MainRoutes = () => {
   return (
     <BrowserRouter>
-      <Navbar />
+      {/* <Navbar /> */}
       <Toast />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/allProducts" element={<ProductList></ProductList>} />

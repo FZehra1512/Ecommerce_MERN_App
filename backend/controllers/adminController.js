@@ -17,7 +17,9 @@ export const addProduct = async (req, res) => {
 
         // Upload each file to Cloudinary and collect the URLs
         const imageUploadPromises = files.map((file) => uploadOnCloudinary(file.path));
+        console.log("imageUploadPromises: ",imageUploadPromises);
         const imagesUploaded = await Promise.all(imageUploadPromises);
+        console.log("imagesUploaded: ",imagesUploaded);
 
         // Save product with the uploaded image URLs
         const newProd = await Product.create({
