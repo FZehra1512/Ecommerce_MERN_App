@@ -84,7 +84,7 @@ const AddProd = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="relative top-20 max-w-lg mx-auto p-4 space-y-6">
+        <form onSubmit={handleSubmit} className="w-full relative top-20 max-w-lg mx-auto p-4 space-y-6">
             <div>
                 <label className="block text-sm font-medium text-gray-700">Name</label>
                 <input

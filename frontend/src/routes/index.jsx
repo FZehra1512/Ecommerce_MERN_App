@@ -10,22 +10,26 @@ import AdminDashBoard from "../pages/adminDashboard";
 import Navbar from "../components/navbar";
 import Toast from "../components/toast";
 import AddProd from "../pages/adminDashboard/AddProd";
+import AdminLayout from "../components/adminLayout";
 
 
 const MainRoutes = () => {
   return (
     <BrowserRouter>
-      <Navbar />
+      {/* <Navbar /> */}
       <Toast />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
+        <Route path="/" element={<><Navbar /><Home /></>} />
+        <Route path="/shop" element={<><Navbar /><Shop /></>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/allProducts" element={<ProductList></ProductList>} />
-        <Route element={<ProtectedRoute/>}>
-          <Route path="/adminDashboard" element={<AdminDashBoard />} />
-          <Route path="/addProduct" element={<AddProd />} />
+        <Route path="/allProducts" element={<><Navbar /><ProductList /></>} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/adminDashboard" element={<AdminLayout />}>
+            <Route index element={<AdminDashBoard />} />
+            <Route path="addProduct" element={<AddProd />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
