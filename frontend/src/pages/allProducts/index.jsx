@@ -3,6 +3,7 @@ import axios from "axios";
 import FavouriteButton from "../../components/favouriteButton";
 import AddToCartButton from "../../components/cartButton";
 import { FaStar } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -56,6 +57,8 @@ const ProductList = () => {
 };
 
 const ProductCard = ({ product, loading = false }) => {
+  const navigate = useNavigate();
+
   const {
     _id,
     name,
@@ -67,12 +70,15 @@ const ProductCard = ({ product, loading = false }) => {
     productCategory,
   } = product;
 
+  const handleClick=()=>{
+    navigate(`/product/${_id}`);
+  }
   return (
-    <div
+    <div 
       className={`rounded-xl shadow-lg overflow-hidden ${loading ? "bg-gray-400 animate-pulse" : "bg-timberWolf"
         }`}
     >
-      <div className="relative">
+      <div  className=" relative">
         <img
           src={productImg[0]}
           alt={name}
@@ -93,7 +99,7 @@ const ProductCard = ({ product, loading = false }) => {
         </div>
       </div>
 
-      <div className="p-3">
+      <div onClick={handleClick} className="cursor-pointer p-3">
         <p className="text-sm font-semibold mb-2">{productCategory?.name}</p>
         <h4 className="text-base font-semibold mb-0">{name}</h4>
         <p className="text-[14px] mb-2">
@@ -105,14 +111,14 @@ const ProductCard = ({ product, loading = false }) => {
           {salePercentage > 0 ? (
             <div className="flex gap-3">
               <span className="text-[14px] text-gray-500 font-semibold line-through">
-                ${price}
+                Rs. {price}
               </span>
               <span className="text-sm text-red-500 font-semibold">
-                ${(price - price * (salePercentage / 100)).toFixed(2)}
+                Rs. {(price - price * (salePercentage / 100)).toFixed(2)}
               </span>
             </div>
           ) : (
-            <span className="text-end text-sm font-semibold">${price}</span>
+            <span className="text-end text-sm font-semibold">Rs. {price}</span>
           )}
           {avgRating > 0 ? (
             <div className="flex items-center justify-center gap-2 font-semibold">

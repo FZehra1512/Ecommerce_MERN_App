@@ -16,6 +16,23 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
+
+export const getSpecificProduct = async (req, res) => {
+  try {
+    const productId = req.params.id; // Correctly capture the ID from params
+    // Example: Fetch product from database
+    const product = await Product.findById(productId); // Replace with actual database call
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Send product details
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // export const makeProduct = async (req, res) => {
 //   try {
 //     const {
