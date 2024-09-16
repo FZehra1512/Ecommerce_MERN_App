@@ -222,7 +222,7 @@ const AdminLayout = () => {
       <div className="flex-1 flex flex-col">
         <AdminNavbar toggleSidebar={toggleSidebar} />
         <main
-          className={`flex-1 p-4 transition-all duration-300 ease-in-out ${
+          className={`flex-1 pt-16 lg:pl-56 transition-all duration-300 ease-in-out ${
             isSidebarOpen ? "lg:ml-64" : "lg:ml-0"
           }`}
         >
