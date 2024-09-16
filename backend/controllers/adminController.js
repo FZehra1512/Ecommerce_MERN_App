@@ -7,7 +7,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 export const addProduct = async (req, res) => {
     try {
         const formData = JSON.parse(req.body.formData)
-        const { name, description, quantity, price, salePercentage } = formData;
+        const { name, description, quantity, price, salePercentage, productCategory } = formData;
         const files = req.files;
 
         // Check if files exist
@@ -29,6 +29,7 @@ export const addProduct = async (req, res) => {
             quantity,
             price,
             salePercentage,
+            productCategory
         });
 
         await newProd.save();

@@ -1,5 +1,6 @@
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import axios from "axios";
-import React, { useState } from "react";
 import { toast } from "react-toastify";
 import Cookies from 'js-cookie';
 
@@ -18,6 +19,20 @@ const AddProd = () => {
         salePercentage: 0,
         productCategory: "",
     });
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        // Fetch categories for dropdown
+        const fetchCategories = async () => {
+          try {
+            const response = await axios.get("http://localhost:5000/admin/getCategories");
+            setCategories(response.data);
+          } catch (error) {
+            console.error("Error fetching categories:", error);
+          }
+        };
+        fetchCategories();
+      }, []);
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -70,7 +85,7 @@ const AddProd = () => {
             const response = await axios.post("http://localhost:5000/admin/addProduct", formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data', // Ensure the correct content type is set,
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': ` Bearer ${token}`,
                 },
             });
 
@@ -179,14 +194,20 @@ const AddProd = () => {
 
             <div>
                 <label className="block text-sm font-medium text-gray-700">Product Category</label>
-                <input
-                    type="text"
+                <select
                     name="productCategory"
                     value={formData.productCategory}
                     onChange={handleChange}
                     required
                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                />
+                >
+                    <option value="">Select a category</option>
+                    {categories.map((category) => (
+                        <option key={category._id} value={category._id}>
+                            {category.name}
+                        </option>
+                    ))}
+                </select>
             </div>
 
             <button
