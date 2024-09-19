@@ -10,6 +10,8 @@ export const addProduct = async (req, res) => {
         const { name, description, quantity, price, salePercentage, productCategory } = formData;
         const files = req.files;
 
+        // console.log(productCategory)
+
         // Check if files exist
         if (!files || files.length === 0) {
             return res.status(400).json({ message: "No images uploaded." });
@@ -47,12 +49,12 @@ export const addProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
     try {
-        const { uId } = req.body;
+        const uId = req.params.id
         // const product = await Product.findById(uId).exec();
         const orders = await Order.find({
             products: { $elemMatch: { productId: uId } },
         });
-        if (orders.length !== 0) return res.status(400).json({ message: "Cannot delete Product", order: orders })
+        if (orders.length !== 0) return res.status(400).json({ message: "Cannot delete Product" })
         await Product.deleteOne({ _id: uId });
         return res.status(200).json({ message: "Product deleted Successfully" });
     } catch (error) {

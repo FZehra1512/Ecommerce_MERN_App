@@ -9,7 +9,7 @@ const router = express.Router()
 router.get("/checkAdmin",checkAdmin);
 
 router.post("/addProduct", isAdminLoggedIn,upload ,addProduct);
-router.delete("/deleteProduct", isAdminLoggedIn, deleteProduct);
+router.delete("/deleteProduct/:id", isAdminLoggedIn, deleteProduct);
 router.put("/updateProduct", isAdminLoggedIn, updateProduct);
 
 router.get("/getCategories", getCategories);

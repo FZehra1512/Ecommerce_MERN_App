@@ -9,12 +9,13 @@ import Login from "../pages/Auth/Login";
 import AdminDashBoard from "../pages/adminDashboard";
 import Navbar from "../components/navbar";
 import Toast from "../components/toast";
-import AddProd from "../pages/adminDashboard/AddProd";
+import AddProd from "../pages/adminDashboard/product/AddProd";
 import ProductPage from "../pages/productPage"
 import Profile from "../pages/profile"
 import Cart from "../pages/cart"
 import AdminLayout from "../components/adminLayout";
 import ManageCategory from "../pages/adminDashboard/category/manageCategory";
+import ManageProduct from "../pages/adminDashboard/product/manageProd";
 import AddCategory from "../pages/adminDashboard/category/addCategory";
 
 
@@ -62,6 +63,7 @@ const MainRoutes = () => {
             <Route index element={<AdminDashBoard />} />
             <Route path="manageCategories" element={<ManageCategory />} />
             <Route path="addCategory" element={<AddCategory />} />
+            <Route path="manageProducts" element={<ManageProduct />} />
             <Route path="addProduct" element={<AddProd />} />
           </Route>
         </Route>
