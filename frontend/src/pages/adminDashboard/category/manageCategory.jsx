@@ -92,9 +92,9 @@ return (
                   {new Date(category.updatedAt).toLocaleDateString()}
                 </td>
                 <td className="py-6 px-4 flex justify-around">
-                  <button className="text-outerSpace hover:text-blue-600">
+                  {/* <button className="text-outerSpace hover:text-blue-600">
                     <FaEdit />
-                  </button>
+                  </button> */}
                   <button className="text-red-500 hover:text-red-700">
                     <FaTrash />
                   </button>
