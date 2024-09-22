@@ -144,9 +144,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 : "my-0 max-h-0 opacity-0"
             }`}
           >
-            <Link to="/adminDashboard/addCategory" onClick={closeSidebar}>
+            {/* <Link to="/adminDashboard/addCategory" onClick={closeSidebar}>
               Add Category
-            </Link>
+            </Link> */}
             <Link to="/adminDashboard/manageCategories" onClick={closeSidebar}>
               Manage Categories
             </Link>

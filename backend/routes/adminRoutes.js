@@ -14,7 +14,7 @@ router.post(
   upload.array("productImg", 5),
   addProduct
 );
-router.delete("/deleteProduct", isAdminLoggedIn, deleteProduct);
+router.delete("/deleteProduct/:id", isAdminLoggedIn, deleteProduct);
 router.put("/updateProduct", isAdminLoggedIn, updateProduct);
 
 router.get("/getCategories", getCategories);

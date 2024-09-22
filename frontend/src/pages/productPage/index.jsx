@@ -21,6 +21,7 @@ const index = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
+    const [category, setCategory] = useState("");
     const [errorMessage, setErrorMessage] = useState('');
     const [mainImage, setMainImage] = useState(''); // State for the main product image
 
@@ -28,8 +29,9 @@ const index = () => {
         const fetchProduct = async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/api/product/${id}`);
-                setProduct(response.data); // Set the product data into state
-                setMainImage(response.data.productImg[0]); // Set the first image as the default main image
+                setProduct(response.data.product); // Set the product data into state
+                setMainImage(response.data.product.productImg[0]); // Set the first image as the default main image
+                setCategory(response.data.category.name)
             } catch (error) {
                 console.error('Error fetching product:', error);
             }
@@ -94,7 +96,7 @@ const index = () => {
                 {/* Product Details */}
                 <div className="md:w-1/2 space-y-4">
                     <h1 className="text-3xl font-bold">{product.name}</h1>
-                    <p className="text-gray-500">Category: {product.productCategory}</p>
+                    <p className="text-gray-500">Category: {category}</p>
 
                     {/* Average Rating */}
                     {product.avgRating > 0 && (

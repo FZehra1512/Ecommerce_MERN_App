@@ -1,5 +1,6 @@
-import Product from "../models/Product.js";
 import Category from "../models/Category.js";
+import Product from "../models/Product.js";
+// import Category from "../models/Category.js";
 // Get all products
 export const getAllProducts = async (req, res) => {
   try {
@@ -27,7 +28,9 @@ export const getSpecificProduct = async (req, res) => {
     }
 
     // Send product details
-    res.status(200).json(product);
+    console.log(product.productCategory);
+    const category = await Category.findById(product.productCategory); // Replace with actual database call
+    res.status(200).json({product,category});
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
