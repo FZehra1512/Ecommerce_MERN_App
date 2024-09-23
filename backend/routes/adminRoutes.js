@@ -19,11 +19,8 @@ router.put("/updateProduct", isAdminLoggedIn, updateProduct);
 
 router.get("/getCategories", getCategories);
 router.post("/addCategory", isAdminLoggedIn, upload.single("categoryImg"), addCategory);
-router.post("/updateCategory", isAdminLoggedIn, upload.single("categoryImg"), updateCategory);
-router.post("/checkCategoryForDeletion", isAdminLoggedIn, checkCategoryForDeletion);
-router.post("/deleteCategory", isAdminLoggedIn, deleteCategory);
+router.patch("/updateCategory/:id", isAdminLoggedIn, upload.single("categoryImg"), updateCategory);
+router.get("/checkCategoryForDeletion/:id", isAdminLoggedIn, checkCategoryForDeletion);
+router.delete("/deleteCategory/:id", isAdminLoggedIn, deleteCategory);
 
 export default router;
-
-
-// TODO: Check whether update can cause error because when no image is uploaded in update.

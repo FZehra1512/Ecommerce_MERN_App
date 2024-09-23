@@ -1,31 +1,60 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import EditCategoryModal from "./updateCategory";
+import { handleActions } from "./deleteCategory";
 
 const ManageCategory = () => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+  //TODO: This fetch category function can be a provider, so that i dont have to 
+  // write the same function multiple times. This function is repeated in manage products
+  // and is passed down to update category
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        "http://localhost:5000/admin/getCategories"
+      );
+      setCategories(response.data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get("http://localhost:5000/admin/getCategories");
-        setCategories(response.data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchCategories();
   }, []);
 
+  const handleEditClick = (categoryId) => {
+    const category = categories.find((cat) => cat._id === categoryId);
+    setSelectedCategory(category);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteClick = (categoryId) => {
+    const category = categories.find((cat) => cat._id === categoryId);
+    setSelectedCategory(category);
+    handleActions(category, fetchCategories)
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedCategory(null);
+  };
+
 return (
   <div className="p-6">
-    <h1 className="text-3xl font-semibold mb-4 text-outerSpace">Manage Categories</h1>
+    <h1 className="text-3xl font-semibold mb-4 text-outerSpace">
+      Manage Categories
+    </h1>
     <div className="overflow-x-auto w-full">
       <table className="min-w-[768px] w-full bg-gray-100">
         <thead className="bg-outerSpace text-white text-sm">
@@ -92,29 +121,43 @@ return (
                   {new Date(category.updatedAt).toLocaleDateString()}
                 </td>
                 <td className="py-6 px-4 flex justify-around">
-                  {/* <button className="text-outerSpace hover:text-blue-600">
+                  <button
+                    onClick={() => handleEditClick(category._id)}
+                    className="text-outerSpace hover:text-blue-600"
+                  >
                     <FaEdit />
-                  </button> */}
-                  <button className="text-red-500 hover:text-red-700">
+                  </button>
+                  <button
+                    onClick={() => handleDeleteClick(category._id)}
+                    className="text-red-500 hover:text-red-700"
+                  >
                     <FaTrash />
                   </button>
                 </td>
               </tr>
             ))
+          ) : error ? (
+            <div className="w-full flex justify-center items-center text-base">
+              {error}
+            </div>
           ) : (
-            error ? (
-              <div className="w-full flex justify-center items-center text-base">{error}</div>
-            ) : (
-              <tr>
-                <td colSpan="7" className="text-center py-4">
-                  No Categories Available
-                </td>
-              </tr>
-            )
+            <tr>
+              <td colSpan="7" className="text-center py-4">
+                No Categories Available
+              </td>
+            </tr>
           )}
         </tbody>
       </table>
     </div>
+    {isModalOpen && (
+      <EditCategoryModal
+        category={selectedCategory}
+        categories={categories}
+        closeModal={closeModal}
+        fetchCategories={fetchCategories}
+      />
+    )}
   </div>
 );
 }

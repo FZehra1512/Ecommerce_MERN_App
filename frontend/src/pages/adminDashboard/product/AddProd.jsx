@@ -14,21 +14,22 @@ const AddProd = () => {
 
     const [showCategories, setShowCategories] = useState(true);
     const [image, setImage] = useState(null);
+    const initialFormData = {
+      name: "",
+      description: {
+        dimension: "",
+        material: "",
+        detailedDescription: "",
+      },
+      productImg: [],
+      quantity: 0,
+      avgRating: 0,
+      price: 0,
+      salePercentage: 0,
+      productCategory: "",
+    };
 
-    const [formData, setFormData] = useState({
-        name: "",
-        description: {
-            dimension: "",
-            material: "",
-            detailedDescription: "",
-        },
-        productImg: [],
-        quantity: 0,
-        avgRating: 0,
-        price: 0,
-        salePercentage: 0,
-        productCategory: "",
-    });
+    const [formData, setFormData] = useState(initialFormData);
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
@@ -110,7 +111,7 @@ const AddProd = () => {
             // console.log("categoryResponse data:", categoryResponse.data.newCategory._id);
             if (categoryResponse.status === 201) {
                 toast.success(categoryResponse.data.message);
-                // reset();
+
             }
         }
 
@@ -141,6 +142,8 @@ const AddProd = () => {
 
             if (response.status === 200) {
                 toast.success("Product Added Successfully");
+                reset();
+                setFormData(initialFormData);
             }
 
         } catch (error) {

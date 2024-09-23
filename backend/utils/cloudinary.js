@@ -17,20 +17,20 @@ const uploadOnCloudinary = async (localPath) => {
         const response = await cloudinary.uploader.upload(localPath, {
             resource_type: "auto",
         });
-        console.log("File successfully uploaded to Cloudinary: ", response.url);
-        return response.url;
+        console.log("File successfully uploaded to Cloudinary: ", response.secure_url);
+        return response.secure_url;
     } catch (error) {
         console.log("Error uploading file to Cloudinary:", error);
         throw error;
     }
 };
 
-// TODO: Confirm the following function is correct or public id is correct
-// TODO: confirm no  need for multer for deletion
 // Function to delete image from Cloudinary
 const deleteFromCloudinary = async (publicId) => {
   try {
-    const result = await cloudinary.uploader.destroy(publicId);
+    const result = await cloudinary.uploader.destroy(publicId, {
+      invalidate: true
+    });
     console.log("File successfully deleted from Cloudinary", result);
     return result; // result.result will be 'ok' if successfully deleted
   } catch (error) {
