@@ -17,6 +17,7 @@ import AdminLayout from "../components/adminLayout";
 import ManageCategory from "../pages/adminDashboard/category/manageCategory";
 import ManageProduct from "../pages/adminDashboard/product/manageProd";
 import AddCategory from "../pages/adminDashboard/category/addCategory";
+import Checkout from "../pages/checkout";
 
 
 const MainRoutes = () => {
@@ -48,6 +49,7 @@ const MainRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route
           path="/allProducts"
           element={

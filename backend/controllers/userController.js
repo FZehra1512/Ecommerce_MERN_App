@@ -28,7 +28,7 @@ export const signUp = async (req, res) => {
         // Respond with success
         res
           .status(201)
-          .json({ message: "User Created Successfully", user: newUser });
+          .json({ message: "User Created Successfully" });
 
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -95,4 +95,23 @@ export const logout = async (req, res) => {
     });
 
     res.status(200).json({ message: "Logout successful" });
+};
+
+
+export const getUser = async (req, res) => {
+    try {
+        const token = req.body.token || req.headers.authorization?.split(" ")[1];;
+        if (token) {
+          const decoded = jwt.verify(token, process.env.SECRET);
+          // Finding the user by ID from the decoded token
+          const userDetails = await User.findById(decoded.uId).select('-password');
+
+          if (!userDetails)
+            return res.status(404).json({ message: "User not found" });
+
+          return res.status(200).json({ message: "User Found", userDetails });
+        } 
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
 };
