@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 // TODO: When user submits the checkout form, and address is not the same as user previous addresses
 // then add the address in the user addresses array and then add the order.
 
-const countries = [
+export const countries = [
   { name: "Pakistan", phoneCode: "+92", standardShipping: 5, expressShipping: 15 },
   { name: "United States", phoneCode: "+1", standardShipping: 10, expressShipping: 20 },
   { name: "United Kingdom", phoneCode: "+44", standardShipping: 8, expressShipping: 18 },
@@ -162,7 +162,10 @@ const CheckoutForm = () => {
                 <input
                   type="text"
                   {...register("phoneNumber", {
-                    required: "Please enter your phone number",
+                    required: {
+                      value: true,
+                      message: "Please enter your phone number",
+                    },
                     pattern: {
                       value: /^\d{10}$/,
                       message: "Please enter a 10-digit phone number",

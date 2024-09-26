@@ -4,9 +4,11 @@ import { useForm } from "react-hook-form";
 import { RxCross1 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import LoadingButton from "../../../components/loadingButton";
 
 const EditCategoryModal = ({ category, categories, closeModal, fetchCategories }) => {
   const [image, setImage] = useState(null);
+  const [disabled, setDisabled] = useState(false);
   const { register, handleSubmit, reset, watch } = useForm({
     defaultValues: {
       name: category.name,
@@ -45,12 +47,13 @@ const EditCategoryModal = ({ category, categories, closeModal, fetchCategories }
 
     try {
       // Prepare form data
+      setDisabled(true);
       const categoryData = new FormData();
 
       const token = Cookies.get("token");
       categoryData.append("token", token);
 
-      console.log(modifiedFields)
+      
       if (Object.keys(modifiedFields).length > 0) {
         categoryData.append("categoryData", JSON.stringify(modifiedFields));
       }
@@ -59,7 +62,6 @@ const EditCategoryModal = ({ category, categories, closeModal, fetchCategories }
         categoryData.append("categoryImg", image);
       }
 
-      console.log(categoryData)
       const response = await axios.patch(
         `http://localhost:5000/admin/updateCategory/${category._id}`,
         categoryData,
@@ -72,12 +74,15 @@ const EditCategoryModal = ({ category, categories, closeModal, fetchCategories }
       );
       if (response.status === 200) {
         toast.success(response.data.message);
-        closeModal();
-        reset();
-        fetchCategories();
       }
     } catch (error) {
       toast.error(error.response.data.message);
+    } finally {
+      // Re-enable form submission
+      setDisabled(false);
+      closeModal();
+      reset();
+      fetchCategories();
     }
   };
 
@@ -88,7 +93,11 @@ const EditCategoryModal = ({ category, categories, closeModal, fetchCategories }
         <button className="absolute top-4 right-4" onClick={closeModal}>
           <RxCross1 />
         </button>
-        <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          encType="multipart/form-data"
+          disabled={disabled}
+        >
           <div className="mb-3">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -156,13 +165,11 @@ const EditCategoryModal = ({ category, categories, closeModal, fetchCategories }
               className="border border-gray-300 rounded p-2 w-full"
             />
           </div>
-
-          <button
-            type="submit"
-            className="bg-ashGray text-outerSpace py-2 px-4 rounded hover:bg-outerSpace hover:text-ashGray"
-          >
-            Update Category
-          </button>
+          <LoadingButton
+            text="Update Category"
+            disabled={disabled}
+            buttonClass="bg-ashGray text-outerSpace py-2 px-4 rounded hover:bg-outerSpace hover:text-ashGray"
+          />
         </form>
       </div>
     </div>

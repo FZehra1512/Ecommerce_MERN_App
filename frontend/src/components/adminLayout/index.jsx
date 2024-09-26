@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { TbCategoryFilled, TbLogout } from "react-icons/tb";
 import { FaBarsStaggered, FaUsers, FaBox } from "react-icons/fa6";
@@ -6,6 +6,8 @@ import { BiHome, BiSearchAlt, BiSolidBell } from "react-icons/bi";
 import { BsBarChartLineFill, BsCartCheckFill, BsPersonCircle } from "react-icons/bs";
 import { RiAdminFill } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const AdminNavbar = ({ toggleSidebar }) => {
 
@@ -96,6 +98,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [usersOpen, setUsersOpen] = useState(false);
+  const navigate = useNavigate();
 
    const closeSidebar = () => {
      setIsOpen(false);
@@ -104,6 +107,19 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const toggleDropdown = (setter) => {
     setter((prevState) => !prevState);
   };
+
+  const handleLogout = () => {
+    if (Cookies.get("token")) {
+      Cookies.remove("token", { path: "/" });
+      localStorage.removeItem("userType");
+      localStorage.removeItem("userName");
+
+      toast.success("Logout Successful");
+      navigate("/shop");
+    } else {
+      toast.error("No token found")
+    }
+  }
 
   const linkClass = "w-full cursor-pointer";
   const flexClass = "flex items-center p-4 rounded-lg transition-colors hover:bg-cherryBlossomPink";
@@ -198,11 +214,17 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             <RiAdminFill className={iconClass} /> Admin Requests
           </li>
         </Link>
-        <Link className={linkClass} onClick={closeSidebar}>
+        <button
+          className={linkClass}
+          onClick={(event) => {
+            closeSidebar();
+            handleLogout();
+          }}
+        >
           <li className={flexClass}>
             <TbLogout className={iconClass} /> Logout
           </li>
-        </Link>
+        </button>
       </ul>
     </div>
   );

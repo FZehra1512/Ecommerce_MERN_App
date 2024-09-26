@@ -5,6 +5,7 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 import { toast } from "react-toastify";
 import { customLocalStorage } from "../../../features/customLocalStorage";
+import LoadingButton from "../../../components/loadingButton";
 
 const Login = () => {
 
@@ -47,9 +48,7 @@ const Login = () => {
         );
 
         const authUser = response.data.user;
-        // console.log(authUser)
-
-        console.log(response);
+      
         if (response.status === 200) {
           Cookies.set('token',response.data.token,{ expires: isRememberMe ? 7 : 1 , secure: true, sameSite: 'strict', path: '/' });
           toast.success("Login successful");
@@ -180,16 +179,23 @@ const Login = () => {
               {...register("honeypot")}
             />
           </div>
-          <button
-            type="submit"
+          <LoadingButton
+            text="Login"
             disabled={disabled}
-            className="w-full py-2 bg-ashGray text-outerSpace font-semibold rounded-md hover:bg-outerSpace hover:text-ashGray transition duration-300"
-          >
-            Login
-          </button>
+            buttonClass={
+              "w-full py-2 bg-ashGray text-outerSpace font-semibold rounded-md hover:bg-outerSpace hover:text-ashGray transition duration-300"
+            }
+          />
         </form>
         <p className="mt-6 text-sm text-center">
-          Don't have an account <Link to="/signup" className="font-bold text-outerSpace cursor-pointer">Sign Up</Link> here
+          Don't have an account{" "}
+          <Link
+            to="/signup"
+            className="font-bold text-outerSpace cursor-pointer"
+          >
+            Sign Up
+          </Link>{" "}
+          here
         </p>
       </div>
     </div>
